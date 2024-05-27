@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,11 @@ import com.example.todolist.R
 import com.example.todolist.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
-
+    private val viewModel: DashboardViewModel by activityViewModels {
+        InventoryViewModelFactory(
+            (activity?.application as InventoryApplication).database.noteDao()
+        )
+    }
     private var _binding: FragmentDashboardBinding? = null
 
     // This property is only valid between onCreateView and
@@ -26,17 +31,30 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val adapter = DashboardAdapter {
+            val action = DashboardFragmentDirections.actionNavigationDashboardToItemDetailFragment2(
+                it.id
+            )
+            this.findNavController().navigate(action)
+        }
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.recyclerView.adapter = adapter
+        // Attach an observer on the allItems list to update the UI automatically when the data
+        // changes.
+        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
+            }
+        }
+
         binding.floatingActionButton.setOnClickListener {
             val action = DashboardFragmentDirections.actionNavigationDashboardToNavigationAddnote(
                 getString(R.string.addnote)

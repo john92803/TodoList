@@ -16,5 +16,10 @@
 package com.example.todolist.ui.dashboard
 
 import android.app.Application
+import com.example.todolist.ui.data.NoteRoomDatabase
 
-class InventoryApplication : Application()
+class InventoryApplication : Application(){
+    val database : NoteRoomDatabase by lazy{
+        NoteRoomDatabase.getDatabase(this)
+    }
+}

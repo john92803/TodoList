@@ -17,4 +17,7 @@
     <string name="sell">Sell</string>
     <string name="delete">Delete</string>
     <string name="edit_item">Edit Item</string>
+    <string name="edit_fragment_title">Edit Fragment Title</string>
+    <string name="note_list">記事</string>
+    <string name="date_list">Deadline</string>
 </resources>

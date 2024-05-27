@@ -22,10 +22,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todolist.R
 import com.example.todolist.databinding.FragmentItemDetailBinding
+import com.example.todolist.ui.data.Note
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -33,6 +35,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  */
 class ItemDetailFragment : Fragment() {
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
+    lateinit var note: Note
+
+    private val viewModel: DashboardViewModel by activityViewModels {
+        InventoryViewModelFactory(
+            (activity?.application as InventoryApplication).database.noteDao()
+        )
+    }
 
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
@@ -46,6 +55,26 @@ class ItemDetailFragment : Fragment() {
         return binding.root
     }
 
+
+    private fun bind(note: Note) {
+        binding.apply {
+            itemDate.text = note.note
+            itemNote.text = note.date
+            deleteItem.setOnClickListener { showConfirmationDialog() }
+            editItem.setOnClickListener { editItem() }
+        }
+    }
+
+    /**
+     * Navigate to the Edit item screen.
+     */
+    private fun editItem() {
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToNavigationAddnote(
+            getString(R.string.edit_fragment_title),
+            note.id
+        )
+        this.findNavController().navigate(action)
+    }
     /**
      * Displays an alert dialog to get the user's confirmation before deleting the item.
      */
@@ -65,9 +94,21 @@ class ItemDetailFragment : Fragment() {
      * Deletes the current item and navigates to the list fragment.
      */
     private fun deleteItem() {
+        viewModel.deleteItem(note)
         findNavController().navigateUp()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val id = navigationArgs.itemId
+        // Retrieve the item details using the itemId.
+        // Attach an observer on the data (instead of polling for changes) and only update the
+        // the UI when the data actually changes.
+        viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
+            note = selectedItem
+            bind(note)
+        }
+    }
     /**
      * Called when fragment is destroyed.
      */
