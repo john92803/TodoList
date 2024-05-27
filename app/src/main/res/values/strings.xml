@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TodoList</string>
+    <string name="title_home">概覽</string>
+    <string name="title_dashboard">記事</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addnote">增加記事</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="add_new_item">addNewItem</string>
+    <string name="cancel">取消</string>
+    <string name="check">確認</string>
+    <string name="input">輸入記事</string>
+    <string name="deadline" />
+    <string name="quantity">Quantity in Stock:</string>
+    <string name="sell">Sell</string>
+    <string name="delete">Delete</string>
+    <string name="edit_item">Edit Item</string>
+</resources>
