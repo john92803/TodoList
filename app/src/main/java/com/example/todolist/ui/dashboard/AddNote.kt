@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -65,7 +66,7 @@ class AddNote : Fragment() {
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
             binding.dateView.text.toString(),
-            binding.inputNote.text.toString(),
+            binding.inputNote.text.toString()
         )
     }
 
@@ -118,7 +119,10 @@ class AddNote : Fragment() {
             }
         } else {
             binding.checkButton.setOnClickListener {
-                addNewItem()
+                if(isEntryValid())
+                    addNewItem()
+                else
+                    Toast.makeText(context, "invalid input!!!", Toast.LENGTH_SHORT).show()
             }
         }
     }

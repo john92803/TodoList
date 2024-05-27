@@ -45,6 +45,7 @@ class DashboardAdapter(private val onItemClicked: (Note) -> Unit) :
         holder.itemView.setOnClickListener {
             onItemClicked(current)
         }
+
         holder.bind(current)
     }
 

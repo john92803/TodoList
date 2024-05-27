@@ -36,9 +36,10 @@
     <TextView
         android:id="@+id/note"
         style="@style/Widget.Inventory.ListItemTextView"
-        android:layout_width="100dp"
+        android:layout_width="216dp"
+        android:layout_height="49dp"
         android:layout_below="@+id/date"
-        android:layout_marginStart="@dimen/margin_between_elements"
+        android:layout_marginStart="-22dp"
         android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
         app:layout_constraintHorizontal_weight="1"
