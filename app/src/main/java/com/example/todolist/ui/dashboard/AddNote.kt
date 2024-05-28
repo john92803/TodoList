@@ -2,24 +2,18 @@ package com.example.todolist.ui.dashboard
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.todolist.R
 import com.example.todolist.databinding.AddNoteBinding
 import com.example.todolist.ui.data.Note
-import com.example.todolist.ui.data.NoteDao
-import com.google.android.material.datepicker.MaterialDatePicker
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 
 class AddNote : Fragment() {
@@ -102,7 +96,7 @@ class AddNote : Fragment() {
 
     fun datePick(year: Int, month: Int, day: Int){
         val nyear = year.toString()
-        val nmonth = month.toString()
+        val nmonth = (month + 1).toString()
         val nday = day.toString()
         val date = "$nyear-$nmonth-$nday"
         binding.dateView.text = date
@@ -136,3 +130,4 @@ class AddNote : Fragment() {
         _binding = null
     }
 }
+

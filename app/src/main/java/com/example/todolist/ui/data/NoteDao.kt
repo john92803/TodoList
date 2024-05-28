@@ -16,6 +16,9 @@ interface NoteDao {
     @Query("SELECT * from item WHERE id = :id")
     fun getItem(id: Int): Flow<Note>
 
+    @Query("SELECT * from item WHERE date Like :date ORDER BY date DESC")
+    fun getNoteByDate(date: String): Flow<List<Note>>
+
     // Specify the conflict strategy as IGNORE, when the user tries to add an
     // existing Item into the database Room ignores the conflict.
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -1,7 +1,5 @@
 package com.example.todolist.ui.dashboard
 
-import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,15 +14,21 @@ class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<Note>> = noteDao.getItems().asLiveData()
 
+    fun findNote(date: String): LiveData<List<Note>> {
+        val noteItems: LiveData<List<Note>> = noteDao.getNoteByDate(date).asLiveData()
+        return noteItems
+    }
+
+
     /**
      * Updates an existing Item in the database.
      */
     fun updateItem(
         noteId: Int,
-        note: String,
-        date: String
+        date: String,
+        note: String
     ) {
-        val updatedItem = getUpdatedItemEntry(noteId, note, date)
+        val updatedItem = getUpdatedItemEntry(noteId, date, note)
         updateItem(updatedItem)
     }
 
@@ -50,7 +54,7 @@ class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
      * Inserts the new Item into database.
      */
     fun addNewItem(note:String, date: String) {
-        val newItem = getNewItemEntry(note, date,)
+        val newItem = getNewItemEntry(date, note)
         insertItem(newItem)
     }
 
@@ -86,8 +90,8 @@ class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
      */
     private fun getNewItemEntry(note:String, date: String): Note {
         return Note(
-            note = note,
-            date = date
+            date = date,
+            note = note
         )
     }
 
@@ -97,8 +101,8 @@ class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
      */
     private fun getUpdatedItemEntry(
         noteId: Int,
-        note:String,
-        date: String
+        date: String,
+        note:String
     ): Note {
         return Note(
             id = noteId,

@@ -58,8 +58,8 @@ class ItemDetailFragment : Fragment() {
 
     private fun bind(note: Note) {
         binding.apply {
-            itemDate.text = note.note
-            itemNote.text = note.date
+            itemDate.text = note.date
+            itemNote.text = note.note
             deleteItem.setOnClickListener { showConfirmationDialog() }
             editItem.setOnClickListener { editItem() }
         }
