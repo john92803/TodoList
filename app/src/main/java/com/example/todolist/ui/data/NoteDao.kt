@@ -1,5 +1,6 @@
 package com.example.todolist.ui.data
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -18,6 +19,9 @@ interface NoteDao {
 
     @Query("SELECT * from item WHERE date Like :date ORDER BY date DESC")
     fun getNoteByDate(date: String): Flow<List<Note>>
+
+    @Query("SELECT * from item WHERE date Like :date")
+    fun getNoteByToCount(date: String): Flow<List<Note>>
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an
     // existing Item into the database Room ignores the conflict.

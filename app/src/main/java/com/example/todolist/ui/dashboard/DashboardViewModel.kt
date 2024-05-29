@@ -1,13 +1,19 @@
 package com.example.todolist.ui.dashboard
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.ui.data.Note
 import com.example.todolist.ui.data.NoteDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
 
@@ -15,10 +21,12 @@ class DashboardViewModel (private val noteDao: NoteDao): ViewModel() {
     val allItems: LiveData<List<Note>> = noteDao.getItems().asLiveData()
 
     fun findNote(date: String): LiveData<List<Note>> {
-        val noteItems: LiveData<List<Note>> = noteDao.getNoteByDate(date).asLiveData()
-        return noteItems
+        return noteDao.getNoteByDate(date).asLiveData()
     }
 
+    fun findNoteByCount(date: String): Flow<List<Note>> {
+        return noteDao.getNoteByToCount(date)
+    }
 
     /**
      * Updates an existing Item in the database.

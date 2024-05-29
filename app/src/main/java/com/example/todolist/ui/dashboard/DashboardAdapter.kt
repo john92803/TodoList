@@ -15,11 +15,15 @@
  */
 package com.example.todolist.ui.dashboard
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.R
+import com.example.todolist.databinding.FragmentDashboardBinding
 import com.example.todolist.ui.data.Note
 import com.example.todolist.databinding.ItemListItemBinding
 
@@ -39,7 +43,6 @@ class DashboardAdapter(private val onItemClicked: (Note) -> Unit) :
             )
         )
     }
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
@@ -55,7 +58,13 @@ class DashboardAdapter(private val onItemClicked: (Note) -> Unit) :
         fun bind(item: Note) {
             binding.date.text = item.date
             binding.note.text = item.note
+
         }
+//        fun done(binding: ItemListItemBinding){
+//            binding.doneButton.setOnClickListener {
+//                binding.note.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
+//            }
+//        }
     }
 
     companion object {

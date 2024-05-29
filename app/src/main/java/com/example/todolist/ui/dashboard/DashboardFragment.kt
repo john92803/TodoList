@@ -1,15 +1,18 @@
 package com.example.todolist.ui.dashboard
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
 import com.example.todolist.databinding.FragmentDashboardBinding
+import com.example.todolist.databinding.ItemListItemBinding
 
 class DashboardFragment : Fragment() {
     private val viewModel: DashboardViewModel by activityViewModels {
@@ -22,6 +25,8 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,13 +77,23 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+
     }
 
     fun datePick(year: Int, month: Int, day: Int){
-        val nyear = year.toString()
-        val nmonth = (month + 1).toString()
-        val nday = day.toString()
-        val date = "$nyear-$nmonth-$nday"
+        val nyear = year
+        val nmonth = (month + 1)
+        val nday = day
+        var date = ""
+        date = if(nmonth < 10 && nday < 10){
+            "$nyear-0$nmonth-0$nday"
+        }else if(nday < 10){
+            "$nyear-$nmonth-0$nday"
+        }else if(nmonth < 10){
+            "$nyear-0$nmonth-$nday"
+        }else{
+            "$nyear-$nmonth-$nday"
+        }
         binding.dateView.text = date
     }
 

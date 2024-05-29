@@ -12,5 +12,4 @@ data class Note (
     val date: String,
     @ColumnInfo(name = "note")
     val note: String
-
 )

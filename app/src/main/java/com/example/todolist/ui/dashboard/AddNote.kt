@@ -65,8 +65,8 @@ class AddNote : Fragment() {
     }
 
     private fun bind(note: Note) {
-        binding.dateView.setText(note.note, TextView.BufferType.SPANNABLE)
-        binding.inputNote.setText(note.date, TextView.BufferType.SPANNABLE)
+        binding.dateView.setText(note.date, TextView.BufferType.SPANNABLE)
+        binding.inputNote.setText(note.note, TextView.BufferType.SPANNABLE)
         binding.checkButton.setOnClickListener { updateItem() }
 
     }
@@ -95,10 +95,19 @@ class AddNote : Fragment() {
     }
 
     fun datePick(year: Int, month: Int, day: Int){
-        val nyear = year.toString()
-        val nmonth = (month + 1).toString()
-        val nday = day.toString()
-        val date = "$nyear-$nmonth-$nday"
+        val nyear = year
+        val nmonth = (month + 1)
+        val nday = day
+        var date = ""
+        date = if(nmonth < 10 && nday < 10){
+            "$nyear-0$nmonth-0$nday"
+        }else if(nday < 10){
+            "$nyear-$nmonth-0$nday"
+        }else if(nmonth < 10){
+            "$nyear-0$nmonth-$nday"
+        }else{
+            "$nyear-$nmonth-$nday"
+        }
         binding.dateView.text = date
     }
 
